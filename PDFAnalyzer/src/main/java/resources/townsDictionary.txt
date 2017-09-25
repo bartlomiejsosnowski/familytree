@@ -1,0 +1,116 @@
+Baranowie	Baranów
+Białej Cerkwi	Biała Cerkiew
+Borowia	Borowia
+Budek	Budki
+Bud Lipowskich	Budy Lipowskie
+Budach Lipowskich	Budy Lipowskie
+Bud Obrębskich	Budy Obrębskie
+Budzenia	Budzeń
+Budzeniu	Budzeń
+Choin	Choiny
+Czyszkowa	Czyszków
+Czyszkowie	Czyszków
+Czyszkówka	Czyszkówek
+Czyszkówku	Czyszkówek
+Dudki	Dudka
+Dzięciołowie	Dzięciołów
+Garwolina	Garwolin
+Garwolinie	Garwolin
+Głoskowa	Głosków
+Głoskowie	Głosków
+Godziszu	Godzisz
+Goździka	Goździk
+Goździku	Goździk
+Górek	Górki
+Górkach	Górki
+Grabowca	Grabowiec
+Gruszczynie	Gruszczyn
+Huty	Huta
+Hucie Garwolińskiej	Huta Garwolińska
+Huty Starej	Huta Stara
+Hucie Żelechowskiej	Huta Żelechowska
+Jagodnego	Jagodne
+Jagodnem	Jagodne
+Jaźwin	Jaźwiny
+Kamionki	Kamionka
+Kamionce	Kamionka
+Kolonii Górki	Kolonia Górki
+Kołbieli	Kołbiel
+Krześlinie	Krześlin
+Księstwie Poznańskim	Księstwo Poznańskie
+Księstwie Witemberskim	Księstwo Witemberskie
+Leonowie	Leonów
+Leszczyn	Leszczyny
+Leszczynach	Leszczyny
+Lipówek	Lipówki
+Liszkowicach	Liszkowice
+Łaskarzewie	Łaskarzew
+Łętowa	Łętów
+Łętowie	Łętów
+Łomnicy	Łomnica
+Maciejowicach	Maciejowice
+Miętnego	Miętne
+Miętnem	Miętne
+Natalii	Natalia
+Niecieplina	Niecieplin
+Niecieplinie	Niecieplin
+Niesadnej	Niesadna
+Oborach	Obory
+Osiecka	Osieck
+Ostrożeniu	Ostrożeń
+Ostrymborze	Ostrybór
+Pałędzi	Pałędź
+Parysowa	Parysów
+Pogorzeli	Pogorzel
+Popławach	Popławy
+Poświętnego	Poświętne
+Prawdzie	Prawda
+Pszonki	Pszonka
+Puznowa	Puznów
+Puznowie	Puznów
+Rachcie	Rachta
+Radoryżu	Radoryż
+Rębkowa	Rębków
+Rębkowie	Rębków
+Rudzie	Ruda
+Rudy Talubskiej	Ruda Talubska
+Rudzie Talubskiej	Ruda Talubska
+Siedlcach	Siedlce
+Siennicy	Siennica
+Sobiekurska	Sobiekursk
+Sobienich Jezior	Sobienie Jeziory
+Sobolewie	Sobolew
+Sokole	Sokół
+Staninie	Stanin
+Starej Wsi	Stara Wieś
+Stoczku	Stoczek
+Sztudgarcie	Studgard
+Sulbin	Sulbiny
+Sulbinach	Sulbiny
+Sulbinach Dolnych	Sulbiny Dolne
+Świdrach	Świdry
+Trąbek	Trąbki
+Trąbkach	Trąbki
+Unina	Unin
+Uninie	Unin
+Uścieńcu	Uścieniec
+Warce	Warka
+Warszawie	Warszawa
+Węgrowie	Węgrów
+Wilchty	Wilchta
+Wilczynie	Wilczyn
+Wilgi	Wilga
+Wilkowyi	Wilkowyja
+Woli Okrzejskiej	Wola Okrzejska
+Woli Rębkowskiej	Wola Rębkowska
+Woli Starogrodzkiej	Wola Starogrodzka
+Woli Żelechowskiej	Wola Żelechowska
+Wólce Gruszczyńskiej	Wólka Gruszczyńska
+Wólkce Tyczyńskiej	Wólka Tyczyńska
+Wysylkowa	Wysylkowo
+Zawad	Zawady
+Zawadach	Zawady
+Żabieńca	Żabieniec
+Żabieńcu	Żabieniec
+Żelechowa	Żelechów
+Żyrzynie	Żyrzyn
