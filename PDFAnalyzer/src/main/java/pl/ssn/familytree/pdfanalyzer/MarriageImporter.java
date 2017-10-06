@@ -28,6 +28,7 @@ public class MarriageImporter {
 				"D:\\Users\\Bartek\\Workspace\\FamilyTree\\PDFAnalyzer\\src\\main\\java\\resources\\marriages_1826-1928.txt");
 		// importFile(file1);
 		importFile(file2);
+		Dictionary.printLackingTowns();
 	}
 
 	private static void importFile(File file) {
@@ -149,34 +150,39 @@ public class MarriageImporter {
 					yearOfBirth = year - Integer.parseInt(matcher.group(0));
 				}
 			}
-			if (sex == Sex.MALE) {
-				if ("syn".equals(word)) {
-					if (i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
-						fatherName = Dictionary.translateFirstName(list.get(i + 1));
-						if (i < list.size() - 3 && list.get(i + 2).equals("i")
-								&& startsWithUpperCase(list.get(i + 3))) {
-							motherName = Dictionary.translateFirstName(list.get(i + 3));
-							if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
-								motherMaidenName = Dictionary.translateFirstName(list.get(i + 4));
-							}
+			if (sex == Sex.MALE && "syn".equals(word)) {
+				if (i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
+					fatherName = Dictionary.translateFirstName(list.get(i + 1));
+					if (i < list.size() - 3 && list.get(i + 2).equals("i") && startsWithUpperCase(list.get(i + 3))) {
+						motherName = Dictionary.translateFirstName(list.get(i + 3));
+						if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
+							motherMaidenName = Dictionary.translateFirstName(list.get(i + 4));
+							i = i + 4;
+							continue;
 						}
+						i = i + 3;
+						continue;
 					}
+					i = i + 1;
+					continue;
 				}
-			} else if (sex == Sex.FEMALE) {
-				if ("córka".equals(word)) {
-					if (i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
-						fatherName = Dictionary.translateFirstName(list.get(i + 1));
-						if (i < list.size() - 3 && list.get(i + 2).equals("i")
-								&& startsWithUpperCase(list.get(i + 3))) {
-							motherName = Dictionary.translateFirstName(list.get(i + 3));
-							if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
-								motherMaidenName = list.get(i + 4);
-							}
+			} else if (sex == Sex.FEMALE && "córka".equals(word)) {
+				if (i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
+					fatherName = Dictionary.translateFirstName(list.get(i + 1));
+					if (i < list.size() - 3 && list.get(i + 2).equals("i") && startsWithUpperCase(list.get(i + 3))) {
+						motherName = Dictionary.translateFirstName(list.get(i + 3));
+						if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
+							motherMaidenName = list.get(i + 4);
+							i = i + 4;
+							continue;
 						}
+						i = i + 3;
+						continue;
 					}
+					i = i + 1;
+					continue;
 				}
-			}
-			if ("rodz.:".equals(word)) {
+			} else if ("rodz.:".equals(word)) {
 				if (i < list.size() - 1
 						&& (startsWithUpperCase(list.get(i + 1)) || "niewiadomi".equals(list.get(i + 1)))) {
 					if (!"niewiadomi".equals(list.get(i + 1)))
@@ -186,57 +192,101 @@ public class MarriageImporter {
 							motherName = list.get(i + 3);
 							if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
 								motherMaidenName = list.get(i + 4);
+								i = i + 4;
+								continue;
 							}
+							i = i + 3;
+							continue;
 						} else if (startsWithUpperCase(list.get(i + 2))) {
 							fatherLastName = list.get(i + 2);
+							i = i + 2;
+							continue;
 						}
 						if (i < list.size() - 4 && list.get(i + 3).equals("i")
 								&& startsWithUpperCase(list.get(i + 4))) {
 							motherName = list.get(i + 4);
 							if (i < list.size() - 5 && startsWithUpperCase(list.get(i + 5))) {
 								motherMaidenName = list.get(i + 5);
+								i = i + 5;
+								continue;
 							}
+							i = i + 4;
+							continue;
 						}
 					}
+					i = i + 1;
+					continue;
 				}
-			}
-			if ("z".equals(word) && i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
+			} else if ("z".equals(word) && i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
 				if (i < list.size() - 2 && startsWithUpperCase(list.get(i + 2))) {
 					currentTown = Dictionary.translateTown(list.get(i + 1) + " " + list.get(i + 2));
+					i = i + 2;
+					continue;
 				} else {
 					currentTown = Dictionary.translateTown(list.get(i + 1));
+					i = i + 1;
+					continue;
 				}
-			}
-			if ("zam".equals(word) && i < list.size() - 2 && "w".equals(list.get(i + 1))
+			} else if ("zam".equals(word) && i < list.size() - 2 && "w".equals(list.get(i + 1))
 					&& startsWithUpperCase(list.get(i + 2))) {
 				if (i < list.size() - 3 && startsWithUpperCase(list.get(i + 3))) {
 					currentTown = Dictionary.translateTown(list.get(i + 2) + " " + list.get(i + 3));
+					i = i + 3;
+					continue;
 				} else {
 					currentTown = Dictionary.translateTown(list.get(i + 2));
+					i = i + 2;
+					continue;
 				}
-			}
-			if ("ur".equals(word) && i < list.size() - 2 && "w".equals(list.get(i + 1))
+			} else if ("ur".equals(word) && i < list.size() - 2 && "w".equals(list.get(i + 1))) {
+				if (startsWithUpperCase(list.get(i + 2))) {
+					if (i < list.size() - 3 && startsWithUpperCase(list.get(i + 3))) {
+						birthTown = Dictionary.translateTown(list.get(i + 2) + " " + list.get(i + 3));
+						i = i + 3;
+						continue;
+					} else {
+						birthTown = Dictionary.translateTown(list.get(i + 2));
+						i = i + 2;
+						continue;
+					}
+				} else if (i < list.size() - 3 && "par".equals(list.get(i + 2))
+						&& startsWithUpperCase(list.get(i + 3))) {
+					if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
+						birthTown = Dictionary.translateTown(list.get(i + 3) + " " + list.get(i + 4));
+						i = i + 4;
+						continue;
+					} else {
+						birthTown = Dictionary.translateTown(list.get(i + 3));
+						i = i + 3;
+						continue;
+					}
+				}
+			} else if ("wdowiec".equals(word) && i < list.size() - 2 && "po".equals(list.get(i + 1))
 					&& startsWithUpperCase(list.get(i + 2))) {
 				if (i < list.size() - 3 && startsWithUpperCase(list.get(i + 3))) {
-					birthTown = Dictionary.translateTown(list.get(i + 2) + " " + list.get(i + 3));
-				} else {
-					birthTown = Dictionary.translateTown(list.get(i + 2));
+					System.out.println("\twdowiec po " + list.get(i + 2) + " " + list.get(i + 3));
+					i = i + 3;
+					continue;
+				} else if (i < list.size() - 4 && "z".equals(list.get(i + 3)) && startsWithUpperCase(list.get(i + 4))) {
+					System.out.println("\twdowiec po " + list.get(i + 2) + " z " + list.get(i + 4));
+					i = i + 4;
+					continue;
 				}
 			}
-			if (fatherLastName == null) {
-				if (sex == Sex.FEMALE)
-					fatherLastName = Dictionary.translateLastName(lastName);
-				else
-					fatherLastName = lastName;
-			}
-			if (fatherName != null) {
-				father = PersonFactory.getPerson(year + "/" + index + "/GF", Sex.MALE, fatherName, fatherLastName, null,
-						null, marriageTown, null);
-			}
-			if (motherName != null || motherMaidenName != null) {
-				mother = PersonFactory.getPerson(year + "/" + index + "/GM", Sex.FEMALE, motherName, lastName, null,
-						motherMaidenName, marriageTown, null);
-			}
+		}
+		if (fatherLastName == null) {
+			if (sex == Sex.FEMALE)
+				fatherLastName = Dictionary.translateLastName(lastName);
+			else
+				fatherLastName = lastName;
+		}
+		if (fatherName != null) {
+			father = PersonFactory.getPerson(year + "/" + index + "/GF", Sex.MALE, fatherName, fatherLastName, null,
+					null, marriageTown, null);
+		}
+		if (motherName != null || motherMaidenName != null) {
+			mother = PersonFactory.getPerson(year + "/" + index + "/GM", Sex.FEMALE, motherName, lastName, null,
+					motherMaidenName, marriageTown, null);
 		}
 		Person groom = PersonFactory.getPerson(year + "/" + index + "/G", Sex.MALE, firstName, lastName, null, null,
 				marriageTown, yearOfBirth);

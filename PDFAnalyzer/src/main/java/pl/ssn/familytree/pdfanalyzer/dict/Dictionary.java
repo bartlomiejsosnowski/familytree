@@ -4,10 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class Dictionary {
 
@@ -16,7 +21,9 @@ public class Dictionary {
 	private static final Map<String, String> LAST_NAME_WILDCARD = new HashMap<String, String>();
 
 	private static final Map<String, String> LAST_NAME_FIXED = new HashMap<String, String>();
-	
+
+	private static final Set<String> LAST_NAME_IN_CASE = new HashSet<String>();
+
 	private static final Map<String, String> TOWNS = new HashMap<String, String>();
 
 	static {
@@ -25,6 +32,9 @@ public class Dictionary {
 		LAST_NAME_WILDCARD.put("cka", "cki");
 		LAST_NAME_WILDCARD.put("cki", "cka");
 		LAST_NAME_FIXED.put("Zadrożny", "Zadrożna");
+		LAST_NAME_IN_CASE.add("skich");
+		LAST_NAME_IN_CASE.add("ckich");
+		LAST_NAME_IN_CASE.add("ych");
 	}
 
 	public static String translateFirstName(String firstName) {
@@ -42,7 +52,7 @@ public class Dictionary {
 			}
 		}
 		String translated = FIRST_NAME.get(firstName);
-		if(translated == null) {
+		if (translated == null) {
 			System.err.println("Translation not found for: " + firstName);
 		}
 		return translated;
@@ -74,7 +84,9 @@ public class Dictionary {
 		}
 		return lastName;
 	}
-	
+
+	private static final Set<String> LACKING_TOWNS = new HashSet<String>();
+
 	public static String translateTown(String town) {
 		if (TOWNS.isEmpty()) {
 			URL resource = Dictionary.class.getClassLoader().getResource("./resources/townsDictionary.txt");
@@ -83,16 +95,27 @@ public class Dictionary {
 				String line;
 				while ((line = br.readLine()) != null) {
 					String[] parts = line.split("\t");
-					TOWNS.put(parts[0], parts[1]);
+					if (parts[1].trim().length() > 0)
+						TOWNS.put(parts[0], parts[1]);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		String translated = TOWNS.get(town);
-		if(translated == null) {
-			System.err.println("Translation not found for: " + town);
+		if (translated == null) {
+			LACKING_TOWNS.add(town);
+			System.err.println("\tNot found: " + town);
+			return town;
 		}
 		return translated;
+	}
+
+	public static void printLackingTowns() {
+		List<String> lackingTowns = new ArrayList<>(LACKING_TOWNS);
+		Collections.sort(lackingTowns);
+		for (String string : lackingTowns) {
+			System.out.println(string);
+		}
 	}
 }

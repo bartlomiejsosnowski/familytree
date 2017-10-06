@@ -1,41 +1,67 @@
 Baranowie	Baranów
 Białej Cerkwi	Biała Cerkiew
+Białkach	Białki
 Borowia	Borowia
+Borowiu	Borowie
+Brzuzie	Brzuza
 Budek	Budki
+Budkach	Budki
+Budek Miętniejskich	Budki Miętniejskie
+Bud Miętniejskich	Budki Miętniejskie
 Bud Lipowskich	Budy Lipowskie
 Budach Lipowskich	Budy Lipowskie
 Bud Obrębskich	Budy Obrębskie
 Budzenia	Budzeń
 Budzeniu	Budzeń
+Bystrzycy	Bystrzyca
+Celejowie	Celejów
+Chęcin	Chęciny
+Chmielewie	Chmielew
 Choin	Choiny
+Choinach	Choiny
+Chordzieży	Chordzież
+Cyganowie	Cyganów
+Cyganówce	Cyganówka
 Czyszkowa	Czyszków
 Czyszkowie	Czyszków
 Czyszkówka	Czyszkówek
 Czyszkówku	Czyszkówek
+Mieście Dubno	Dubno
 Dudki	Dudka
 Dzięciołowie	Dzięciołów
+Filipówce	Filipówka
 Garwolina	Garwolin
 Garwolinie	Garwolin
 Głoskowa	Głosków
 Głoskowie	Głosków
+Głoskowie	Głosków
+Gocławiu	Gocław
 Godziszu	Godzisz
+Gorzowie	Gorzów
 Goździka	Goździk
 Goździku	Goździk
 Górek	Górki
 Górkach	Górki
+Górznie	Górzno
 Grabowca	Grabowiec
 Gruszczynie	Gruszczyn
 Huty	Huta
 Hucie Garwolińskiej	Huta Garwolińska
+Huty Garwolińskiej	Huta Garwolińska
 Huty Starej	Huta Stara
 Hucie Żelechowskiej	Huta Żelechowska
+Iwowego	Iwowe
+Izdebna	Izdebno
 Jagodnego	Jagodne
 Jagodnem	Jagodne
+Janoszycach	Janoszyce
 Jaźwin	Jaźwiny
 Kamionki	Kamionka
 Kamionce	Kamionka
+Kazimierzu	Kazimierz
 Kolonii Górki	Kolonia Górki
 Kołbieli	Kołbiel
+Kosumcach	Kosumce
 Krześlinie	Krześlin
 Księstwie Poznańskim	Księstwo Poznańskie
 Księstwie Witemberskim	Księstwo Witemberskie
@@ -43,74 +69,234 @@ Leonowie	Leonów
 Leszczyn	Leszczyny
 Leszczynach	Leszczyny
 Lipówek	Lipówki
+Lipówkach	Lipówki
 Liszkowicach	Liszkowice
 Łaskarzewie	Łaskarzew
 Łętowa	Łętów
 Łętowie	Łętów
 Łomnicy	Łomnica
+Łucznicy	Łucznica
 Maciejowicach	Maciejowice
+Maciejowic	Maciejowice
+Magnuszewie	Magnuszew
+Miastkowie	Miastków
 Miętnego	Miętne
 Miętnem	Miętne
+Mińsku	Mińsk
+Mysłowa	Mysłów
 Natalii	Natalia
 Niecieplina	Niecieplin
 Niecieplinie	Niecieplin
+Niecieplina	Niecieplin
 Niesadnej	Niesadna
 Oborach	Obory
+Obrębie	Obręb
 Osiecka	Osieck
+Osiecku	Osieck
 Ostrożeniu	Ostrożeń
+Ostrowie	Ostrów
 Ostrymborze	Ostrybór
 Pałędzi	Pałędź
 Parysowa	Parysów
+Parysowie	Parysów
+Podwierzbiu	Podwierzbie
 Pogorzeli	Pogorzel
 Popławach	Popławy
 Poświętnego	Poświętne
-Prawdzie	Prawda
+Przykorach	Przykory
 Pszonki	Pszonka
 Puznowa	Puznów
 Puznowie	Puznów
+Puznówki	Puznówka
 Rachcie	Rachta
 Radoryżu	Radoryż
 Rębkowa	Rębków
 Rębkowie	Rębków
+Rozwadówku	Rozwadówek
 Rudzie	Ruda
 Rudy Talubskiej	Ruda Talubska
 Rudzie Talubskiej	Ruda Talubska
+Rudorzyc	Rudorzyce
+Ryczyskach	Ryczyska
+Rzepinie	Rzepin
+Sambodziu	Sambodzie
+Samogoszczy	Samogoszcz
+Seroczynie	Seroczyn
+Serokomli	Serokomla
 Siedlcach	Siedlce
 Siennicy	Siennica
+Smogorzewie	Smogorzew
 Sobiekurska	Sobiekursk
+Sobieniach Biskupich	Sobienie Biskupie
 Sobienich Jezior	Sobienie Jeziory
 Sobolewie	Sobolew
 Sokole	Sokół
 Staninie	Stanin
+Starej Hucie	Stara Huta
 Starej Wsi	Stara Wieś
 Stoczku	Stoczek
 Sztudgarcie	Studgard
 Sulbin	Sulbiny
 Sulbinach	Sulbiny
 Sulbinach Dolnych	Sulbiny Dolne
+Świadkowa Górnego	Świadków Górny
 Świdrach	Świdry
 Trąbek	Trąbki
 Trąbkach	Trąbki
+Trzciance	Trzcianka
 Unina	Unin
 Uninie	Unin
 Uścieńcu	Uścieniec
 Warce	Warka
 Warszawie	Warszawa
+Warszawy	Warszawa
 Węgrowie	Węgrów
 Wilchty	Wilchta
+Wilchcie	Wilchta
 Wilczynie	Wilczyn
 Wilgi	Wilga
 Wilkowyi	Wilkowyja
+Wiskietkach	Wiskietki
+Wodyniach	Wodynie
+Woli	Wola
+Woli Miastkowskiej	Wola Miastkowska
 Woli Okrzejskiej	Wola Okrzejska
 Woli Rębkowskiej	Wola Rębkowska
 Woli Starogrodzkiej	Wola Starogrodzka
 Woli Żelechowskiej	Wola Żelechowska
 Wólce Gruszczyńskiej	Wólka Gruszczyńska
 Wólkce Tyczyńskiej	Wólka Tyczyńska
+Wólce Tyczyńskiej	Wólka Tyczyńska
+Wólce Ulanowskiej	Wólka Ulanowska
 Wysylkowa	Wysylkowo
 Zawad	Zawady
 Zawadach	Zawady
+Zgorznicy	Zgorznica
+Żabiance	Żabianka
 Żabieńca	Żabieniec
 Żabieńcu	Żabieniec
 Żelechowa	Żelechów
+Żelechowie	Żelechów
 Żyrzynie	Żyrzyn
+Prawdzie	PRAWDA
+Adamowie	Adamów
+Alekandrówce	Aleksandrówka
+Aleksandrii	Aleksandrii
+Aleksandrowa	Aleksandrów
+Aleksandrowie	Aleksandrów
+Aleksandrówce	Aleksandrówka
+Aleksandrówki	Aleksandrówka
+Aleskandrowie	Aleksandrów
+Aleskandrówce	Aleksandrówka
+Ambramowicach	Ambramowice
+Anielowie	Anielów
+Annopola	Annopol
+Annopolu	Annopol
+Annowie	Annów
+Antoninie Nowym	Antonin Nnowy
+Augustowie	Augustów
+Augustówce	Augustówka
+Augustówki	Augustówka
+Austrii	Austria
+Babicach	Babice
+Baczkówce	Baczkówka
+Badachówce	Badachówka
+Barakach Czyszkowskich	Baraki Czyszkowskie
+Barczącej	Barcząca
+Bardo	Bardo
+Bartnikach	Bartniki
+Bawarii	Bawaria
+Bezwoli	Bezwola
+Białegostoku	Białystok
+Białej	Biała
+Białowieży	Białowieża
+Bielany	Bielany
+Bielawie	Bielawa
+Bierchowie	Bierchów
+Biołopolu	Biołopole
+Bliskowicach	Bliskowice
+Bobrownikach	Bobrowniki
+Boczkowicach	Boczkowice
+Bogdanowie	Bogdanów
+Bondkowie	Bondków
+Bonkowej Górze	Bonkowa Góra
+Borkach	Borki
+Borkowicach	Borkowice
+Borkowie	Borków
+Borowcu	Borowiec
+Borzykowa	Borzyków
+Borówku	Borówko
+Brumowie	Brumów
+Brzegach	Brzegi
+Brzegów	Brzegi
+Brzezicy	Brzeciza
+Brzezinach	Brzeziny
+Brześciu Litewskim	Brześć Litewski
+Brześciu Poleskim	Brześć Poleski
+Brzeźcach	Brzeźce
+Brzozowej Gaci	Brzozowa Gać
+Brzozowie	Brzozów
+Brzuskowoli	Brzuszkowola
+Brzuzy	Brzuza
+Bud Uśniackich	Budy Uśniackie
+Bud Woleńskich	Budy Woleńskie
+Budach Garwolińskich	Budy Garwolińskie
+Budach Izdebińskie	Budy Izdebińskie
+Budach Krępskich	Budy Krępskie
+Budach Lipskiach	Budy Lipskie
+Budach Maydańskich	Budy Maydańskie
+Budach Miętniejskich	Budy Miętniejskie
+Budach Obrębskich	Budy Obrębskie
+Budach Podłęskich	Budy Podłęskie
+Budach Uśniackich	Budy Uśniackie
+Budek Uśniackich	Budy Uśniackie
+Budkach Uśniackich	Budki Uśniackie
+Budlu	Budel
+Budzisk	Budziska
+Budziskach	Budziska
+Bukówki	Bukówka
+Butkach	Butki
+Bystrzejowicach	Bystrzejowice
+Bączkach	Bączki
+Bączkowie	Bączków
+Bąkwicach	Bąkwice
+Będzinie	Będzine
+Błaszkach	Błaszki
+Błażejkach	Błażejki
+Błoniach	Błonie
+Carskiej Kołodce	Carska Kołodka
+Całowaniu	Całowanie
+Celejowa	Celejów
+Celestynowie	Celestynów
+Celinach	Celina
+Celinowie	Celinów
+Cesarstwie Rosyjskim	Cesarstwo Rosyjskie
+Chełma	Chełm
+Chełmie	Chełm
+Chełmnie	Chełmno
+Chmielniku	Chmielnik
+Chmielowie	Chmielów
+Chojnach	Chojny
+Chomętowo	Chomętowo
+Chordowie	Chordowo
+Chotyni	Chotynia
+Chotynii	Chotynia
+Chromina	Chromin
+Chrominie	Chromin
+Chrosnej	Chrosna
+Chrostnem	Chrostna
+Chrząszczówce	Chrząszczówka
+Chrząszczówki	Chrząszczówka
+Chyżynach	Chyżyny
+Chęcinach	Chęciny
+Chęcinach Nowych	Chęciny Nowe
+Ciechanowa	Ciechanów
+Ciechanowie	Ciechanów
+Ciechocimie	Ciechocim
+Cieciszkach	Cieciszki
+Ciemieniowie	Ciemieniów
+Ciepielowie	Ciepielów
+Czachówku	Czachówek
+Czajkach	Czajki
+Czajkowie	Czajków
+Czaplinku	Czaplinek

@@ -12,6 +12,8 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+import pl.ssn.familytree.pdfanalyzer.dict.Dictionary;
+
 public class TextExtractor {
 
 	public TextExtractor(File file, File toFile, int startPageValue, int endPageValue, boolean sortByPosition) {
@@ -71,7 +73,7 @@ public class TextExtractor {
 	public static void main(String[] args) {
 		File file = new File("D:\\Users\\Bartek\\Documents\\Drzewo genealogiczne\\test.pdf");
 		File toFile = new File(
-				"D:\\Users\\Bartek\\Workspace\\FamilyTree\\PDFAnalyzer\\src\\main\\java\\resources\\marriages_1826-1928.txt");
+				"D:\\Users\\Bartek\\Workspace\\FamilyTree\\PDFAnalyzer\\src\\main\\java\\resources\\marriages_1826-1928_.txt");
 		new TextExtractor(file, toFile, 939, 1276, true);
 	}
 }
