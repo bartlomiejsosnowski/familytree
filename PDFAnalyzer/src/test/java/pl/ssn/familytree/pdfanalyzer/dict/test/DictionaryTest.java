@@ -14,15 +14,22 @@ public class DictionaryTest {
 	}
 	@Test
 	public void lastNames() {
-		assertEquals("Sosnowska", Dictionary.translateLastName("Sosnowski"));
-		assertEquals("Sosnowski", Dictionary.translateLastName("Sosnowska"));
-		assertEquals("Kamaszewski", Dictionary.translateLastName("Kamaszewska"));
-		assertEquals("Zadrożny", Dictionary.translateLastName("Zadrożna"));
-		assertEquals("Zadrożna", Dictionary.translateLastName("Zadrożny"));
+		assertEquals("Sosnowska", Dictionary.translateLastNameSex("Sosnowski"));
+		assertEquals("Sosnowski", Dictionary.translateLastNameSex("Sosnowska"));
+		assertEquals("Kamaszewski", Dictionary.translateLastNameSex("Kamaszewska"));
+		assertEquals("Zadrożny", Dictionary.translateLastNameSex("Zadrożna"));
+		assertEquals("Zadrożna", Dictionary.translateLastNameSex("Zadrożny"));
 	}
 	
 	@Test
 	public void town() {
 		assertEquals("Garwolin", Dictionary.translateTown("Garwolinie"));
+	}
+	@Test
+	public void lastNamesInCase() {
+		assertEquals("Zadrożna", Dictionary.translateLastNameCase("Zadrożnych"));
+		assertEquals("Pawliszewska", Dictionary.translateLastNameCase("Pawliszewskich"));
+		assertEquals("Wójcik", Dictionary.translateLastNameCase("Wójcików"));
+		assertEquals("Zarzycka", Dictionary.translateLastNameCase("Zarzyckich"));
 	}
 }

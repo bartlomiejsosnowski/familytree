@@ -22,7 +22,9 @@ public class Dictionary {
 
 	private static final Map<String, String> LAST_NAME_FIXED = new HashMap<String, String>();
 
-	private static final Set<String> LAST_NAME_IN_CASE = new HashSet<String>();
+	private static final Map<String, String> LAST_NAME_IN_CASE = new HashMap<String, String>();
+	
+	private static final Map<String, String> LAST_NAME_IN_CASE_WILDCARD = new HashMap<String, String>();
 
 	private static final Map<String, String> TOWNS = new HashMap<String, String>();
 
@@ -32,9 +34,16 @@ public class Dictionary {
 		LAST_NAME_WILDCARD.put("cka", "cki");
 		LAST_NAME_WILDCARD.put("cki", "cka");
 		LAST_NAME_FIXED.put("Zadrożny", "Zadrożna");
-		LAST_NAME_IN_CASE.add("skich");
-		LAST_NAME_IN_CASE.add("ckich");
-		LAST_NAME_IN_CASE.add("ych");
+		LAST_NAME_IN_CASE.put("Wójcików", "Wójcik");
+		LAST_NAME_IN_CASE.put("Jarząbków", "Jarząbek");
+		LAST_NAME_IN_CASE.put("Makulców", "Makulec");
+		LAST_NAME_IN_CASE.put("Kałasków", "Kałaska");
+		LAST_NAME_IN_CASE.put("Michalików", "Michalik");
+		LAST_NAME_IN_CASE_WILDCARD.put("skich", "ska");
+		LAST_NAME_IN_CASE_WILDCARD.put("ckich", "cka");
+		LAST_NAME_IN_CASE_WILDCARD.put("skiej", "ska");
+		LAST_NAME_IN_CASE_WILDCARD.put("ckiej", "cka");
+		LAST_NAME_IN_CASE_WILDCARD.put("ych", "a");
 	}
 
 	public static String translateFirstName(String firstName) {
@@ -58,7 +67,7 @@ public class Dictionary {
 		return translated;
 	}
 
-	public static String translateLastName(String lastName) {
+	public static String translateLastNameSex(String lastName) {
 		if (lastName != null) {
 			Iterator<Entry<String, String>> it = LAST_NAME_WILDCARD.entrySet().iterator();
 			while (it.hasNext()) {
@@ -84,6 +93,26 @@ public class Dictionary {
 		}
 		return lastName;
 	}
+	
+	public static String translateLastNameCase(String lastName) {
+		if (lastName != null) {
+			Iterator<Entry<String, String>> it = LAST_NAME_IN_CASE_WILDCARD.entrySet().iterator();
+			while (it.hasNext()) {
+				Entry<String, String> entry = it.next();
+				int lastIndexOf = lastName.lastIndexOf(entry.getKey());
+				if (lastIndexOf >= 0 && lastName.length() - lastIndexOf == entry.getKey().length()) {
+					return lastName.substring(0, lastIndexOf) + entry.getValue();
+				}
+			}
+			Iterator<Entry<String, String>> it2 = LAST_NAME_IN_CASE.entrySet().iterator();
+			while (it2.hasNext()) {
+				Entry<String, String> entry = it2.next();
+				if (lastName.equals(entry.getKey()))
+					return entry.getValue();
+			}
+		}
+		return lastName;
+	}
 
 	private static final Set<String> LACKING_TOWNS = new HashSet<String>();
 
@@ -105,7 +134,7 @@ public class Dictionary {
 		String translated = TOWNS.get(town);
 		if (translated == null) {
 			LACKING_TOWNS.add(town);
-			System.err.println("\tNot found: " + town);
+//			System.err.println("\tNot found: " + town);
 			return town;
 		}
 		return translated;

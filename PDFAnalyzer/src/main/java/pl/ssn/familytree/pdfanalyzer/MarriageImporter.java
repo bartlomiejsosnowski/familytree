@@ -7,19 +7,54 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import pl.ssn.familytree.pdfanalyzer.dict.Dictionary;
+import pl.ssn.familytree.pdfanalyzer.pattern.MatchedWrapper;
+import pl.ssn.familytree.pdfanalyzer.pattern.Pattern;
+import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper;
+import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper.Element;
+import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper.Modifier;
 import pl.ssn.familytree.pdfanalyzer.person.Person;
 import pl.ssn.familytree.pdfanalyzer.person.PersonFactory;
 import pl.ssn.familytree.pdfanalyzer.person.Sex;
 
 public class MarriageImporter {
 
-	private static final Pattern AGE_PATTERN = Pattern.compile("[0-9]{2}");
+	private static final java.util.regex.Pattern AGE_PATTERN = java.util.regex.Pattern.compile("[0-9]{2}");
 
-	private static final Pattern AGE_PARENTHESESS_PATTERN = Pattern.compile("\\(([0-9]{2})\\)");
+	private static final java.util.regex.Pattern AGE_PARENTHESESS_PATTERN = java.util.regex.Pattern
+			.compile("\\(([0-9]{2})\\)");
+
+	private static final PatternWrapper WIDOW_PATTERN = new PatternWrapper()
+			.add(new Pattern().add(Modifier.EQUAL, "wdowiec").add(Modifier.EQUAL, "po")
+					.add(Modifier.FIRST_UPPERCASE, Element.WIFE_NAME_IN_CASE)
+					.add(Modifier.FIRST_UPPERCASE, Element.WIFE_MAIDEN_NAME))
+			.add(new Pattern().add(Modifier.EQUAL, "wdowiec").add(Modifier.EQUAL, "po")
+					.add(Modifier.FIRST_UPPERCASE, Element.WIFE_NAME_IN_CASE).add(Modifier.EQUAL, "z")
+					.add(Modifier.FIRST_UPPERCASE, Element.WIFE_MAIDEN_NAME_IN_CASE));
+
+	private static final PatternWrapper PARENT_PATTERN = new PatternWrapper()
+			.add(new Pattern().add(Modifier.EQUAL, "córka").add(Modifier.FIRST_UPPERCASE, Element.FATHER_NAME)
+					.add(Modifier.EQUAL, "i").add(Modifier.FIRST_UPPERCASE, Element.MOTHER_NAME))
+			.add(new Pattern().add(Modifier.EQUAL, "syn").add(Modifier.FIRST_UPPERCASE, Element.FATHER_NAME)
+					.add(Modifier.EQUAL, "i").add(Modifier.FIRST_UPPERCASE, Element.MOTHER_NAME))
+			.add(new Pattern().add(Modifier.EQUAL, "rodz.:").add(Modifier.FIRST_UPPERCASE, Element.FATHER_NAME)
+					.add(Modifier.EQUAL, "i").add(Modifier.FIRST_UPPERCASE, Element.MOTHER_NAME)
+					.add(Modifier.FIRST_UPPERCASE, Element.MOTHER_MAIDEN_NAME))
+			.add(new Pattern().add(Modifier.EQUAL, "rodz.:").add(Modifier.FIRST_UPPERCASE, Element.FATHER_NAME)
+					.add(Modifier.REGEX, "\\([0-9]{1,2}\\)", Element.FATHER_AGE).add(Modifier.EQUAL, "i")
+					.add(Modifier.FIRST_UPPERCASE, Element.MOTHER_NAME)
+					.add(Modifier.FIRST_UPPERCASE, Element.MOTHER_MAIDEN_NAME)
+					.add(Modifier.REGEX, "\\([0-9]{1,2}\\)", Element.MOTHER_AGE))
+			.add(new Pattern().add(Modifier.EQUAL, "rodz.:").add(Modifier.FIRST_UPPERCASE, Element.FATHER_NAME)
+					.add(Modifier.EQUAL, "(b.d.)").add(Modifier.EQUAL, "i")
+					.add(Modifier.FIRST_UPPERCASE, Element.MOTHER_NAME)
+					.add(Modifier.FIRST_UPPERCASE, Element.MOTHER_MAIDEN_NAME).add(Modifier.EQUAL, "(b.d.)"))
+			.add(new Pattern().add(Modifier.EQUAL, "rodz.:").add(Modifier.FIRST_UPPERCASE, Element.FATHER_NAME)
+					.add(Modifier.EQUAL, "(b.d.)").add(Modifier.EQUAL, "i")
+					.add(Modifier.FIRST_UPPERCASE, Element.MOTHER_NAME).add(Modifier.EQUAL, "(b.d.)"))
+			.add(new Pattern().add(Modifier.EQUAL, "rodz.:").add(Modifier.EQUAL, "niewiadomi"));
 
 	public static void main(String[] args) {
 		File file1 = new File(
@@ -44,7 +79,7 @@ public class MarriageImporter {
 				if (line.length() < 2)
 					continue;
 				if (line.startsWith("Śluby w")) {
-					Matcher matcher = Pattern.compile("[0-9]{4}").matcher(line);
+					Matcher matcher = java.util.regex.Pattern.compile("[0-9]{4}").matcher(line);
 					if (matcher.find()) {
 						year = Integer.parseInt(matcher.group(0));
 					}
@@ -57,7 +92,7 @@ public class MarriageImporter {
 					String[] parts = new String[list.size()];
 					list.toArray(parts);
 					if (parts[0].matches("^[0-9]+\\.")) {
-						Matcher matcher = Pattern.compile("^([0-9]+)\\.").matcher(line);
+						Matcher matcher = java.util.regex.Pattern.compile("^([0-9]+)\\.").matcher(line);
 						if (matcher.find()) {
 							index = Integer.parseInt(matcher.group(1));
 						}
@@ -112,7 +147,7 @@ public class MarriageImporter {
 		}
 	}
 
-	private static Person getGroomOrBride(Integer year, int index, String marriageTown, Sex sex, List<String> list) {
+	private static Person getGroomOrBride(Integer currentYear, int index, String marriageTown, Sex sex, List<String> list) {
 		if (list.isEmpty())
 			return null;
 		String firstName = null;
@@ -120,8 +155,10 @@ public class MarriageImporter {
 		Integer yearOfBirth = null;
 		String fatherName = null;
 		String fatherLastName = null;
+		Integer fatherYearOfBirth = null;
 		String motherName = null;
 		String motherMaidenName = null;
+		Integer motherYearOfBirth = null;
 		String currentTown = null;
 		String birthTown = null;
 		Person father = null;
@@ -135,10 +172,7 @@ public class MarriageImporter {
 		for (int i = 0; i < list.size(); i++) {
 			String word = list.get(i);
 			if (word.startsWith("(") && word.endsWith(")")) {
-				Matcher matcher = AGE_PARENTHESESS_PATTERN.matcher(word);
-				if (matcher.find()) {
-					yearOfBirth = year - Integer.parseInt(matcher.group(1));
-				}
+				yearOfBirth = parseYearOfBirth(currentYear, word);
 			} else if ("lat".equals(word) || "lata".equals(word)) {
 				Matcher matcher = null;
 				if (i > 0) {
@@ -147,74 +181,24 @@ public class MarriageImporter {
 					matcher = AGE_PATTERN.matcher(list.get(i + 1));
 				}
 				if (matcher != null && matcher.find()) {
-					yearOfBirth = year - Integer.parseInt(matcher.group(0));
+					yearOfBirth = currentYear - Integer.parseInt(matcher.group(0));
 				}
 			}
-			if (sex == Sex.MALE && "syn".equals(word)) {
-				if (i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
-					fatherName = Dictionary.translateFirstName(list.get(i + 1));
-					if (i < list.size() - 3 && list.get(i + 2).equals("i") && startsWithUpperCase(list.get(i + 3))) {
-						motherName = Dictionary.translateFirstName(list.get(i + 3));
-						if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
-							motherMaidenName = Dictionary.translateFirstName(list.get(i + 4));
-							i = i + 4;
-							continue;
-						}
-						i = i + 3;
-						continue;
+			if ("syn".equals("word") || "córka".equals(word) || "rodz.:".equals(word)) {
+				MatchedWrapper matched = PARENT_PATTERN.matcher(list, i);
+				if (matched != null) {
+					fatherName = matched.getByElement(Element.FATHER_NAME);
+					motherName = matched.getByElement(Element.MOTHER_NAME);
+					motherMaidenName = matched.getByElement(Element.MOTHER_MAIDEN_NAME);
+					String fatherAge = matched.getByElement(Element.FATHER_AGE);
+					if (fatherAge != null) {
+						fatherYearOfBirth = parseYearOfBirth(currentYear, fatherAge);
 					}
-					i = i + 1;
-					continue;
-				}
-			} else if (sex == Sex.FEMALE && "córka".equals(word)) {
-				if (i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
-					fatherName = Dictionary.translateFirstName(list.get(i + 1));
-					if (i < list.size() - 3 && list.get(i + 2).equals("i") && startsWithUpperCase(list.get(i + 3))) {
-						motherName = Dictionary.translateFirstName(list.get(i + 3));
-						if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
-							motherMaidenName = list.get(i + 4);
-							i = i + 4;
-							continue;
-						}
-						i = i + 3;
-						continue;
+					String motherAge = matched.getByElement(Element.MOTHER_AGE);
+					if (motherAge != null) {
+						motherYearOfBirth = parseYearOfBirth(currentYear, motherAge);
 					}
-					i = i + 1;
-					continue;
-				}
-			} else if ("rodz.:".equals(word)) {
-				if (i < list.size() - 1
-						&& (startsWithUpperCase(list.get(i + 1)) || "niewiadomi".equals(list.get(i + 1)))) {
-					if (!"niewiadomi".equals(list.get(i + 1)))
-						fatherName = list.get(i + 1);
-					if (i < list.size() - 3) {
-						if (list.get(i + 2).equals("i") && startsWithUpperCase(list.get(i + 3))) {
-							motherName = list.get(i + 3);
-							if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
-								motherMaidenName = list.get(i + 4);
-								i = i + 4;
-								continue;
-							}
-							i = i + 3;
-							continue;
-						} else if (startsWithUpperCase(list.get(i + 2))) {
-							fatherLastName = list.get(i + 2);
-							i = i + 2;
-							continue;
-						}
-						if (i < list.size() - 4 && list.get(i + 3).equals("i")
-								&& startsWithUpperCase(list.get(i + 4))) {
-							motherName = list.get(i + 4);
-							if (i < list.size() - 5 && startsWithUpperCase(list.get(i + 5))) {
-								motherMaidenName = list.get(i + 5);
-								i = i + 5;
-								continue;
-							}
-							i = i + 4;
-							continue;
-						}
-					}
-					i = i + 1;
+					i = matched.getLastMatchedWordIndex();
 					continue;
 				}
 			} else if ("z".equals(word) && i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
@@ -261,40 +245,46 @@ public class MarriageImporter {
 						continue;
 					}
 				}
-			} else if ("wdowiec".equals(word) && i < list.size() - 2 && "po".equals(list.get(i + 1))
-					&& startsWithUpperCase(list.get(i + 2))) {
-				if (i < list.size() - 3 && startsWithUpperCase(list.get(i + 3))) {
-					System.out.println("\twdowiec po " + list.get(i + 2) + " " + list.get(i + 3));
-					i = i + 3;
-					continue;
-				} else if (i < list.size() - 4 && "z".equals(list.get(i + 3)) && startsWithUpperCase(list.get(i + 4))) {
-					System.out.println("\twdowiec po " + list.get(i + 2) + " z " + list.get(i + 4));
-					i = i + 4;
+			} else if ("wdowiec".equals(word)) {
+				MatchedWrapper matched = WIDOW_PATTERN.matcher(list, i);
+				if (matched != null) {
+					System.out.println(matched);
+					i = matched.getLastMatchedWordIndex();
 					continue;
 				}
 			}
 		}
 		if (fatherLastName == null) {
 			if (sex == Sex.FEMALE)
-				fatherLastName = Dictionary.translateLastName(lastName);
+				fatherLastName = Dictionary.translateLastNameSex(lastName);
 			else
 				fatherLastName = lastName;
 		}
 		if (fatherName != null) {
-			father = PersonFactory.getPerson(year + "/" + index + "/GF", Sex.MALE, fatherName, fatherLastName, null,
+			father = PersonFactory.getPerson(currentYear + "/" + index + "/GF", Sex.MALE, fatherName, fatherLastName, null,
 					null, marriageTown, null);
 		}
 		if (motherName != null || motherMaidenName != null) {
-			mother = PersonFactory.getPerson(year + "/" + index + "/GM", Sex.FEMALE, motherName, lastName, null,
+			mother = PersonFactory.getPerson(currentYear + "/" + index + "/GM", Sex.FEMALE, motherName, lastName, null,
 					motherMaidenName, marriageTown, null);
 		}
-		Person groom = PersonFactory.getPerson(year + "/" + index + "/G", Sex.MALE, firstName, lastName, null, null,
+		Person groom = PersonFactory.getPerson(currentYear + "/" + index + "/G", Sex.MALE, firstName, lastName, null, null,
 				marriageTown, yearOfBirth);
 		if (groom != null) {
 			groom.setFather(father);
 			groom.setMother(mother);
 		}
 		return groom;
+	}
+
+	private static Integer parseYearOfBirth(Integer currentYear, String age) {
+		if (age.startsWith("(") && age.endsWith(")")) {
+			Matcher matcher = AGE_PARENTHESESS_PATTERN.matcher(age);
+			if (matcher.find()) {
+				return currentYear - Integer.parseInt(matcher.group(1));
+			}
+		}
+		return null;
 	}
 
 	private static boolean isBrideSectionStart(String[] parts, int i) {

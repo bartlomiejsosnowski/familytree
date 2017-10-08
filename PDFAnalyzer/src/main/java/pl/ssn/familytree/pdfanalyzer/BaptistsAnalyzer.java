@@ -143,7 +143,7 @@ public class BaptistsAnalyzer {
 							father = PersonFactory.getUnkownPerson("B/" + year + "/" + index + "/F", Sex.MALE, town);
 						} else {
 							if (child.getSex() == Sex.FEMALE) {
-								fatherLastName = Dictionary.translateLastName(lastName);
+								fatherLastName = Dictionary.translateLastNameSex(lastName);
 							} else {
 								fatherLastName = lastName;
 							}
@@ -169,7 +169,7 @@ public class BaptistsAnalyzer {
 							mother = PersonFactory.getUnkownPerson("B/" + year + "/" + index + "/M", Sex.FEMALE, town);
 						} else {
 							if (child.getSex() == Sex.MALE) {
-								motherLastName = Dictionary.translateLastName(lastName);
+								motherLastName = Dictionary.translateLastNameSex(lastName);
 							} else {
 								motherLastName = lastName;
 							}

@@ -25,18 +25,21 @@ public class Pattern {
 		return this;
 	}
 
-	public List<Matched> matches(List<String> list, int index) {
-		List<Matched> result = new ArrayList<Matched>();
+	public MatchedWrapper matches(List<String> list, int index) {
+		MatchedWrapper result = new MatchedWrapper();
+		int lastMatchedWordIndex = index;
 		for (int i = 0; i < elements.size() && index < list.size(); i++, index++) {
 			Matched matches = elements.get(i).matches(list.get(index));
 			if (matches != null) {
 				if (matches.getElement() != null) {
+					lastMatchedWordIndex = index;
 					result.add(matches);
 				}
 			} else {
 				return null;
 			}
 		}
+		result.setLastMatchedWordIndex(lastMatchedWordIndex);
 		return result;
 	}
 
