@@ -1,6 +1,6 @@
 package pl.ssn.familytree.pdfanalyzer.dict.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals; 
 
 import org.junit.Test;
 

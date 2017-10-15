@@ -2,11 +2,13 @@ package pl.ssn.familytree.pdfanalyzer.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import pl.ssn.familytree.pdfanalyzer.dict.Dictionary;
 import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper.Element;
 
 public class MatchedWrapper {
+
 	private final List<Matched> result = new ArrayList<Matched>();
 
 	private int lastMatchedWordIndex;
@@ -16,10 +18,14 @@ public class MatchedWrapper {
 	}
 
 	public String getByElement(Element element) {
-		for (Matched matched : result) {
-			if (element.equals(matched.getElement())) {
-				return translateIfNeeded(matched);
+		List<Matched> filtered = result.stream().filter((matched) -> element == matched.getElement())
+				.collect(Collectors.toList());
+		if (!filtered.isEmpty()) {
+			String word = filtered.stream().map((matched) -> matched.getWord()).collect(Collectors.joining(" "));
+			if (filtered.stream().anyMatch((matched) -> matched.isInCase())) {
+				return translate(element, word);
 			}
+			return word;
 		}
 		return null;
 	}
@@ -32,20 +38,25 @@ public class MatchedWrapper {
 		return lastMatchedWordIndex;
 	}
 
+	public int getSize() {
+		return result.size();
+	}
+
 	@Override
 	public String toString() {
 		return "MatchedWrapper [result=" + result + "]";
 	}
 
-	private static final String translateIfNeeded(Matched matched) {
-		if (Element.FATHER_NAME_IN_CASE == matched.getElement()
-				|| Element.MOTHER_NAME_IN_CASE == matched.getElement() || Element.WIFE_NAME_IN_CASE == matched.getElement()) {
-			return Dictionary.translateFirstName(matched.getWord());
+	private static final String translate(Element element, String word) {
+		if (Element.FATHER_NAME == element || Element.MOTHER_NAME == element || Element.WIFE_NAME == element) {
+			return Dictionary.translateFirstName(word);
 		}
-		if (Element.WIFE_MAIDEN_NAME_IN_CASE == matched.getElement()) {
-			return Dictionary.translateLastNameSex(matched.getWord());
+		if (Element.WIFE_MAIDEN_NAME == element) {
+			return Dictionary.translateLastNameSex(word);
 		}
-		return matched.getWord();
-
+		if (Element.TOWN == element) {
+			return Dictionary.translateTown(word);
+		}
+		return word;
 	}
 }

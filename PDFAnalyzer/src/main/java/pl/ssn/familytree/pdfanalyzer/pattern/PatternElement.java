@@ -8,40 +8,59 @@ public class PatternElement {
 	private final Modifier modifier;
 	private final Element element;
 	private final String value;
+	private final boolean inCase;
 
 	public PatternElement(Modifier modifier, String value) {
 		this.modifier = modifier;
 		this.value = value;
 		this.element = null;
+		this.inCase = false;
 	}
 
 	public PatternElement(Modifier modifier, Element element) {
 		this.modifier = modifier;
 		this.value = null;
 		this.element = element;
+		this.inCase = false;
+	}
+
+	public PatternElement(Modifier modifier, Element element, boolean inCase) {
+		this.modifier = modifier;
+		this.value = null;
+		this.element = element;
+		this.inCase = inCase;
 	}
 
 	public PatternElement(Modifier modifier, Element element, String value) {
 		this.modifier = modifier;
 		this.element = element;
 		this.value = value;
+		this.inCase = false;
+	}
+	
+	public boolean hasElement() {
+		return (this.element != null);
+	}
+
+	public boolean isInCase() {
+		return inCase;
 	}
 
 	public Matched matches(String word) {
 		switch (modifier) {
 		case EQUAL:
 			if (word.equals(value)) {
-				return new Matched(word, element);
+				return new Matched(word, element, inCase);
 			}
 			break;
 		case FIRST_UPPERCASE:
 			if (startsWithUpperCase(word)) {
-				return new Matched(word, element);
+				return new Matched(word, element, inCase);
 			}
 			break;
 		case REGEX:
-			if(word.matches(value)) {
-				return new Matched(word, element);
+			if (word.matches(value)) {
+				return new Matched(word, element, inCase);
 			}
 			break;
 		default:

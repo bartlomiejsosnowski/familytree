@@ -10,6 +10,16 @@ public class Pattern {
 
 	private List<PatternElement> elements = new ArrayList<PatternElement>();
 
+	private boolean mustMatchAll;
+
+	public Pattern(boolean mustMatchAll) {
+		this.mustMatchAll = mustMatchAll;
+	}
+
+	public Pattern() {
+		this.mustMatchAll = false;
+	}
+
 	public Pattern add(Modifier modifier, String word) {
 		this.elements.add(new PatternElement(modifier, word));
 		return this;
@@ -17,6 +27,11 @@ public class Pattern {
 
 	public Pattern add(Modifier modifier, Element element) {
 		this.elements.add(new PatternElement(modifier, element));
+		return this;
+	}
+
+	public Pattern add(Modifier modifier, Element element, boolean inCase) {
+		this.elements.add(new PatternElement(modifier, element, inCase));
 		return this;
 	}
 
@@ -36,6 +51,11 @@ public class Pattern {
 					result.add(matches);
 				}
 			} else {
+				return null;
+			}
+		}
+		if(mustMatchAll) {
+			if(result.getSize() != this.elements.stream().filter((el) -> el.hasElement()).count()) {
 				return null;
 			}
 		}
