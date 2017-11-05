@@ -11,10 +11,8 @@ import java.util.stream.Collectors;
 
 import pl.ssn.familytree.pdfanalyzer.dict.Dictionary;
 import pl.ssn.familytree.pdfanalyzer.pattern.MatchedWrapper;
-import pl.ssn.familytree.pdfanalyzer.pattern.Pattern;
 import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper;
 import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper.Element;
-import pl.ssn.familytree.pdfanalyzer.pattern.PatternWrapper.Modifier;
 import pl.ssn.familytree.pdfanalyzer.person.Person;
 import pl.ssn.familytree.pdfanalyzer.person.PersonFactory;
 import pl.ssn.familytree.pdfanalyzer.person.Sex;
@@ -31,8 +29,11 @@ public class MarriageImporter {
 				"D:\\Users\\Bartek\\Workspace\\FamilyTree\\PDFAnalyzer\\src\\main\\java\\resources\\marriages_1777-1825.txt");
 		File file2 = new File(
 				"D:\\Users\\Bartek\\Workspace\\FamilyTree\\PDFAnalyzer\\src\\main\\java\\resources\\marriages_1826-1928.txt");
-		// importFile(file1);
-		importFile(file2);
+		File file3 = new File(
+				"D:\\Users\\Bartek\\Workspace\\FamilyTree\\PDFAnalyzer\\src\\main\\java\\resources\\marr_test.txt");
+//		importFile(file1);
+		 importFile(file2);
+//		 importFile(file3);
 		Dictionary.printLackingTowns();
 	}
 
@@ -79,10 +80,9 @@ public class MarriageImporter {
 								currentList.add(removeDotOrComma(word));
 						}
 						// System.out.println(_groom + " " + _bride);
-						Person groom = getSpouse(year, index, null, Sex.MALE, _groom);
-						Person bride = getSpouse(year, index, null, Sex.FEMALE, _bride);
-						// System.out.println(year + "/" + index + " " + null + ":\r\n\t " + groom +
-						// "\r\n\t " + bride);
+						Person groom = parsePerson(year, index, null, Sex.MALE, _groom);
+						Person bride = parsePerson(year, index, null, Sex.FEMALE, _bride);
+						System.out.println(year + "/" + index + " " + null + ":\r\n\t " + groom + "\r\n\t " + bride);
 					} else if (isTownFirst(parts, 3)) {
 						List<String> _town = new ArrayList<String>();
 						List<String> _groom = new ArrayList<String>();
@@ -103,10 +103,9 @@ public class MarriageImporter {
 						}
 						// System.out.println(_groom + " " + _bride);
 						String town = String.join(" ", _town);
-						Person groom = getSpouse(year, index, town, Sex.MALE, _groom);
-						Person bride = getSpouse(year, index, town, Sex.FEMALE, _bride);
-						// System.out.println(year + "/" + index + " " + town + ":\r\n\t " + groom +
-						// "\r\n\t " + bride);
+						Person groom = parsePerson(year, index, town, Sex.MALE, _groom);
+						Person bride = parsePerson(year, index, town, Sex.FEMALE, _bride);
+						System.out.println(year + "/" + index + " " + town + ":\r\n\t " + groom + "\r\n\t " + bride);
 					} else {
 						System.out.println("Skomplikowane: " + line);
 					}
@@ -117,7 +116,7 @@ public class MarriageImporter {
 		}
 	}
 
-	private static Person getSpouse(Integer currentYear, int number, String marriageTown, Sex sex,
+	private static Person parsePerson(Integer currentYear, int number, String marriageTown, Sex sex,
 			List<String> list) {
 		if (list.isEmpty())
 			return null;
@@ -132,6 +131,7 @@ public class MarriageImporter {
 		Integer motherYearOfBirth = null;
 		String currentTown = null;
 		String birthTown = null;
+		String birthParishTown = null;
 		Person father = null;
 		Person mother = null;
 		if (startsWithUpperCase(list.get(0))) {
@@ -174,33 +174,18 @@ public class MarriageImporter {
 				}
 			} else if ("z".equals(word) && i < list.size() - 1 && startsWithUpperCase(list.get(i + 1))) {
 				MatchedWrapper matched = PatternWrapper.TOWN_PATTERN.matcher(list, i);
-				if(matched != null) {
+				if (matched != null) {
 					currentTown = matched.getByElement(Element.TOWN);
 					i = matched.getLastMatchedWordIndex();
 					continue;
 				}
 			} else if ("ur".equals(word) && i < list.size() - 2 && "w".equals(list.get(i + 1))) {
-				if (startsWithUpperCase(list.get(i + 2))) {
-					if (i < list.size() - 3 && startsWithUpperCase(list.get(i + 3))) {
-						birthTown = Dictionary.translateTown(list.get(i + 2) + " " + list.get(i + 3));
-						i = i + 3;
-						continue;
-					} else {
-						birthTown = Dictionary.translateTown(list.get(i + 2));
-						i = i + 2;
-						continue;
-					}
-				} else if (i < list.size() - 3 && "par".equals(list.get(i + 2))
-						&& startsWithUpperCase(list.get(i + 3))) {
-					if (i < list.size() - 4 && startsWithUpperCase(list.get(i + 4))) {
-						birthTown = Dictionary.translateTown(list.get(i + 3) + " " + list.get(i + 4));
-						i = i + 4;
-						continue;
-					} else {
-						birthTown = Dictionary.translateTown(list.get(i + 3));
-						i = i + 3;
-						continue;
-					}
+				MatchedWrapper matched = PatternWrapper.TOWN_PATTERN.matcher(list, i);
+				if (matched != null) {
+					birthTown = matched.getByElement(Element.TOWN);
+					birthParishTown = matched.getByElement(Element.PARISH_TOWN);
+					i = matched.getLastMatchedWordIndex();
+					continue;
 				}
 			} else if ("wdowiec".equals(word)) {
 				MatchedWrapper matched = PatternWrapper.WIDOW_PATTERN.matcher(list, i);
@@ -217,34 +202,45 @@ public class MarriageImporter {
 			else
 				fatherLastName = lastName;
 		}
+		String town = null;
+		if(marriageTown != null) {
+			town = marriageTown;
+		} else {
+			town = currentTown;
+		}
 		if (fatherName != null) {
 			final String index = IndexCreator.createIndex(currentYear, number,
 					(sex == Sex.MALE) ? EventType.GROOM_FATHER : EventType.BRIDE_FATHER);
-			father = PersonFactory.getPerson(index, Sex.MALE, fatherName, fatherLastName, null, null, marriageTown,
-					null);
+			father = PersonFactory.getPerson(index, Sex.MALE, fatherName, fatherLastName, null, null, town,
+					birthTown, fatherYearOfBirth);
 		}
 		if (motherName != null || motherMaidenName != null) {
 			final String index = IndexCreator.createIndex(currentYear, number,
 					(sex == Sex.MALE) ? EventType.GROOM_MOTHER : EventType.BRIDE_MOTHER);
-			mother = PersonFactory.getPerson(index, Sex.FEMALE, motherName, lastName, null, motherMaidenName,
-					marriageTown, null);
+			mother = PersonFactory.getPerson(index, Sex.FEMALE, motherName, lastName, null, town,
+					marriageTown, birthTown, motherYearOfBirth);
 		}
 		final String index = IndexCreator.createIndex(currentYear, number,
 				(sex == Sex.MALE) ? EventType.GROOM : EventType.BRIDE);
-		Person spouse = PersonFactory.getPerson(index, Sex.MALE, firstName, lastName, null, null, marriageTown,
-				yearOfBirth);
-		if (spouse != null) {
-			spouse.setFather(father);
-			spouse.setMother(mother);
+		Person person = PersonFactory.getPerson(index, sex, firstName, lastName, null, null, town,
+				birthTown, yearOfBirth);
+		if (person != null) {
+			person.setFather(father);
+			person.setMother(mother);
 		}
-		return spouse;
+		return person;
 	}
 
 	private static Integer parseYearOfBirth(Integer currentYear, String age) {
 		if (age.startsWith("(") && age.endsWith(")")) {
 			Matcher matcher = AGE_PARENTHESESS_PATTERN.matcher(age);
 			if (matcher.find()) {
-				return currentYear - Integer.parseInt(matcher.group(1));
+				try {
+					return currentYear - Integer.parseInt(matcher.group(1));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}
 		return null;
@@ -295,7 +291,7 @@ public class MarriageImporter {
 	}
 
 	private static String removeDotOrComma(String str) {
-		if (str.length() >= 2 && (str.endsWith(".") || str.endsWith(",") || str.endsWith(")")))
+		if (str.length() >= 2 && (str.endsWith(".") || str.endsWith(",")))
 			return str.substring(0, str.length() - 1);
 		return str;
 	}

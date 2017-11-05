@@ -13,13 +13,13 @@ public class Person {
 
 	private final String lastName;
 
-	private final String details;
-
 	private final String maidenName;
 
 	private final String town;
 
 	private final Integer yearOfBirth;
+
+	private final String placeOfBirth;
 
 	private final String index;
 
@@ -37,8 +37,8 @@ public class Person {
 
 	private List<Person> children;
 
-	public Person(Integer id, Sex sex, String firstName, String lastName, String details, String maidenName,
-			String town, Integer yearOfBirth, String index) {
+	public Person(Integer id, Sex sex, String firstName, String lastName, String maidenName, String town,
+			String placeOfBirth, Integer yearOfBirth, String index) {
 		this.id = id;
 		if (sex != null) {
 			this.sex = sex;
@@ -47,17 +47,17 @@ public class Person {
 		}
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.details = details;
 		this.maidenName = maidenName;
 		this.town = town;
+		this.placeOfBirth = placeOfBirth;
 		this.yearOfBirth = yearOfBirth;
 		this.index = index;
 	}
 
-	public Person(Integer id, Sex sex, String firstName, String lastName, String details, String maidenName,
-			String town, Integer yearOfBirth, String index, String fatherName, String motherName,
+	public Person(Integer id, Sex sex, String firstName, String lastName, String maidenName, String town,
+			String placeOfBirth, Integer yearOfBirth, String index, String fatherName, String motherName,
 			String motherMaidenName) {
-		this(id, sex, firstName, lastName, details, motherMaidenName, town, yearOfBirth, index);
+		this(id, sex, firstName, lastName, motherMaidenName, town, placeOfBirth, yearOfBirth, index);
 		this.fatherName = fatherName;
 		this.motherName = motherName;
 		this.motherMaidenName = motherMaidenName;
@@ -83,12 +83,12 @@ public class Person {
 		return maidenName;
 	}
 
-	public String getDetails() {
-		return details;
-	}
-
 	public String getTown() {
 		return town;
+	}
+
+	public String getPlaceOfBirth() {
+		return placeOfBirth;
 	}
 
 	public Integer getYearOfBirth() {
@@ -213,9 +213,9 @@ public class Person {
 		str.append(", sex=\"").append(sex).append("\"");
 		str.append(", firstName=\"").append(firstName).append("\"");
 		str.append(", lastName=\"").append(lastName).append("\"");
-		str.append(", town=\"").append(town).append("\"");
-		str.append(", details=\"").append(details).append("\"");
 		str.append(", maidenName=\"").append(maidenName).append("\"");
+		str.append(", town=\"").append(town).append("\"");
+		str.append(", placeOfBirth=\"").append(placeOfBirth).append("\"");
 		str.append(", yearOfBirth=\"").append(yearOfBirth).append("\"");
 		str.append(", index=\"").append(index).append("\"");
 		str.append(", fatherName=\"").append(fatherName).append("\"");

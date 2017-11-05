@@ -121,8 +121,9 @@ public class BaptistsAnalyzer {
 						lastName = parts[0];
 					}
 					Sex sex = (firstName.trim().endsWith("a")) ? Sex.FEMALE : Sex.MALE;
-					child = PersonFactory.getPerson("B/" + year + "/" + index + "/C", sex, firstName, lastName, null,
-							null, town, year);
+					String _index = IndexCreator.createIndex(year, index, EventType.BIRTH);
+					child = PersonFactory.getPerson(_index, sex, firstName, lastName, null,
+							null, town, town, year);
 					i = i + name.length() + 2;
 				}
 				if (i + 5 < charArray.length && charArray[i] == 'r' && charArray[i + 1] == 'o'
@@ -140,7 +141,8 @@ public class BaptistsAnalyzer {
 							}
 						}
 						if (fatherName.contains("oj. niewiadomy")) {
-							father = PersonFactory.getUnkownPerson("B/" + year + "/" + index + "/F", Sex.MALE, town);
+							String _index = IndexCreator.createIndex(year, index, EventType.BIRTH_FATHER);
+							father = PersonFactory.getUnkownPerson(_index, Sex.MALE, town);
 						} else {
 							if (child.getSex() == Sex.FEMALE) {
 								fatherLastName = Dictionary.translateLastNameSex(lastName);
@@ -158,15 +160,17 @@ public class BaptistsAnalyzer {
 							} else {
 								fatherFirstName = fatherName;
 							}
-							father = PersonFactory.getPerson("B/" + year + "/" + index + "/F", Sex.MALE,
-									fatherFirstName, fatherLastName, fatherDetails, null, town, fatherBornYear);
+							String _index = IndexCreator.createIndex(year, index, EventType.BIRTH_FATHER);
+							father = PersonFactory.getPerson(_index, Sex.MALE,
+									fatherFirstName, fatherLastName, fatherDetails, null, town, null, fatherBornYear);
 						}
 					}
 					motherName = readUntil(i, charArray, ". ");
 					if (motherName != null) {
 						i = i + motherName.length() + 1;
 						if (motherName.contains("matka niewiadoma")) {
-							mother = PersonFactory.getUnkownPerson("B/" + year + "/" + index + "/M", Sex.FEMALE, town);
+							String _index = IndexCreator.createIndex(year, index, EventType.BIRTH_MOTHER);
+							mother = PersonFactory.getUnkownPerson(_index, Sex.FEMALE, town);
 						} else {
 							if (child.getSex() == Sex.MALE) {
 								motherLastName = Dictionary.translateLastNameSex(lastName);
@@ -193,8 +197,9 @@ public class BaptistsAnalyzer {
 									motherFirstName = motherName;
 								}
 							}
-							mother = PersonFactory.getPerson("B/" + year + "/" + index + "/M", Sex.FEMALE,
-									motherFirstName, motherLastName, null, motherMaidenName, town, motherBornYear);
+							String _index = IndexCreator.createIndex(year, index, EventType.BIRTH_FATHER);
+							mother = PersonFactory.getPerson(_index, Sex.FEMALE,
+									motherFirstName, motherLastName, null, motherMaidenName, town, null, motherBornYear);
 						}
 					}
 					if (child != null) {
